@@ -2,7 +2,7 @@ var user =
 [
     {
     password: "123",
-    name: "Maheboob Kankuti",
+    name: "Maheboob Kankurti",
     email: "maheboobkankurti@gmail.com",
     Mob: 8484079010,
     age: 24,
