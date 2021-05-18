@@ -1,5 +1,5 @@
 const express = require('express')
-const { map } = require('../staticData/user')
+// const { map } = require ('../staticData/user')
 const router = express.Router()
 const user = require('../staticData/user')
 
@@ -29,7 +29,7 @@ router.post('/createuser', (req, res) =>
 
 router.delete('/deleteuser',(req, res) =>
 {
-    
+
     var flag=0
     user.map((iterator,i) =>
     {
