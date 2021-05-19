@@ -57,7 +57,7 @@ router.put('/updateuser', (req, res) =>
     {
         if(user[i].email === req.body.email)
         {
-            flag = 1
+            flag ++
             user[i].Mob=req.body.Mob
             res.send("Details updated successfully.")
                       
@@ -96,4 +96,4 @@ router.put('/forgetpassword', (req, res) =>
 })
 
 
-module.exports=router
+module.exports = router

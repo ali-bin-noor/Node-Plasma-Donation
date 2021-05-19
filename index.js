@@ -1,8 +1,13 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
+
+//Routes 
 const userRoute = require('./src/routes/userRoute')
 const postRoute = require('./src/routes/postRoute')
-const bodyParser = require('body-parser')
+const storyRoute = require('./src/routes/storyRoute')
+const receiverRouter = require('./src/routes/receiverRoute')
 
 const PORT=6000
 
@@ -23,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/user', userRoute)
 app.use('/post', postRoute)
+app.use('/story', storyRoute)
+app.use('/receiver', receiverRouter)
 
 
 app.listen(PORT, () => {
