@@ -8,6 +8,7 @@ const userRoute = require('./src/routes/userRoute')
 const postRoute = require('./src/routes/postRoute')
 const storyRoute = require('./src/routes/storyRoute')
 const receiverRouter = require('./src/routes/receiverRoute')
+const requestDonorRoute = require('./src/routes/requestDonorRoute')
 
 const PORT=6000
 
@@ -30,6 +31,7 @@ app.use('/user', userRoute)
 app.use('/post', postRoute)
 app.use('/story', storyRoute)
 app.use('/receiver', receiverRouter)
+app.use('/requestdonor', requestDonorRoute)
 
 
 app.listen(PORT, () => {
