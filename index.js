@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const mongoURL = require('./config/').mongoURL
 
 
 //Routes 
@@ -33,7 +35,16 @@ app.use('/story', storyRoute)
 app.use('/receiver', receiverRouter)
 app.use('/requestdonor', requestDonorRoute)
 
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useFindAndModify: false, 
+    useUnifiedTopology: true,
+}).then(()=>{
+    console.log("Database Successfully connected :)")
+}).catch((error)=>{
+    console.log(`ERROR: ${error.message}`);
+})
 
 app.listen(PORT, () => {
-    console.log(`Server is up on port ${PORT}`)    
+    console.log(`Server is up on port ${PORT} :)` )    
 })
