@@ -6,11 +6,11 @@ const mongoURL = require('./config/').mongoURL
 
 
 //Routes 
-const userRoute = require('./src/routes/userRoute')
-const postRoute = require('./src/routes/postRoute')
-const storyRoute = require('./src/routes/storyRoute')
-const receiverRouter = require('./src/routes/receiverRoute')
-const requestDonorRoute = require('./src/routes/requestDonorRoute')
+const donor = require('./src/routes/donorRoute')
+const post = require('./src/routes/postRoute')
+const story = require('./src/routes/storyRoute')
+const receiver = require('./src/routes/receiverRoute')
+const requestDonor = require('./src/routes/requestDonorRoute')
 
 const PORT=6000
 
@@ -29,11 +29,11 @@ app.get('/', (req, res) =>
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use('/user', userRoute)
-app.use('/post', postRoute)
-app.use('/story', storyRoute)
-app.use('/receiver', receiverRouter)
-app.use('/requestdonor', requestDonorRoute)
+app.use('/donor', donor)
+app.use('/post', post)
+app.use('/story', story)
+app.use('/receiver', receiver)
+app.use('/requestdonor', requestDonor)
 
 mongoose.connect(mongoURL, {
     useNewUrlParser: true,
@@ -44,6 +44,7 @@ mongoose.connect(mongoURL, {
 }).catch((error)=>{
     console.log(`ERROR: ${error.message}`);
 })
+
 
 app.listen(PORT, () => {
     console.log(`Server is up on port ${PORT} :)` )    
