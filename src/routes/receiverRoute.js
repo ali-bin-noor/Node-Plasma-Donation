@@ -77,9 +77,9 @@ router.delete('/deletereceiver',(req, res) =>{
                 message : "Reciever deleted successfully."
             })
         }
-    }).catch((message)=>{
+    }).catch((error)=>{
         res.send({
-            message: error.message
+            error: error.message
         })
     })
 })
