@@ -35,7 +35,6 @@ router.post('/createdonor', (req, res) =>
         }
         else
         {
-            console.log("From else")
             const donor = new Donor(
             {
                 password: req.body.password,
