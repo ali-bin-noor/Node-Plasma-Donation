@@ -99,7 +99,74 @@ router.delete('/deletedonor',(req, res) =>{
 })
 
 
+router.put('/updatedonor',(req,res) =>{
+    Donor.updateOne(
+        {
+            _id:req.body.id
+        },
+        {
+            $set : {
+                ...req.body
+            }
+        }).then((data) => {
+            Donor.findOne({_id:req.body.id}).then((data) =>{
+                if(data)
+                {
+                    res.send({
+                        message: "Donor updated successfully.",
+                        data
+                    })
+                }
+                res.send({
+                    message: "Donor not exists to update."
+                })
+            }).catch((error) =>{
+                res.send({
+                    error:error.message
+                })
+            })
 
+
+    }).catch((error) =>{
+        error:error.message
+    })
+})
+
+router.put('/forgetpassword',(req, res) =>{
+    Donor.updateOne(
+        {
+            email:req.body.email
+        },
+        {
+            $set : {
+                password : req.body.password
+            }
+
+        }).then((data) => {
+            Donor.findOne({email:req.body.email}).then((DATA) =>{
+                if(DATA!=null)
+                {
+                    res.send({
+                        message: "Password reset successfully."
+                    })
+                }
+                else
+                {
+                    res.send({
+                        message : "email doesn't exists."
+                    })
+                }
+            }).catch((error) =>{
+                res.send({
+                    error : error.message
+                })
+            })
+        }).catch((error) => {
+            res.send({
+                error : error.message
+            })
+        })
+    })
 // router.get('/', (req, res) => 
 // {
 //     res.send(user)

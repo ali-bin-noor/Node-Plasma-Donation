@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const post = require('../staticData/post')
 const Receiver = require('../models/Receiver')
+const Donor = require('../models/Donor')
 
 router.get('/',(req, res) =>{
     Receiver.find().then((data) =>{
@@ -83,6 +84,65 @@ router.delete('/deletereceiver',(req, res) =>{
         })
     })
 })
+
+router.put('/updatereceiver',(req, res) =>{
+    Receiver.updateOne(
+        {
+            _id:req.body.id
+        },
+        {
+            $set : {
+                ...req.body
+            }
+        }
+    ).then((data) =>{
+        Receiver.findOne({_id:req.body.id}).then((DATA) =>{
+            if(DATA!=null)
+            {
+                res.send({
+                    message: "Receiver details updated successfully."
+                })
+            }
+            else{
+                res.send({
+                    message: "Receiver doesn't exists for update."
+                })
+            }
+        }).catch((error) =>{
+            res.send({
+                error : error.message
+            })
+        })
+    }).catch((error) =>{
+        res.send({
+            error : error.message
+        })
+    })
+})
+
+
+router.get('/searchdonor',(req, res) =>{
+    Donor.find({bloodGroup:req.body.bloodGroup}).then((data) =>{
+        if(data)
+        {
+            res.send(data)
+        }
+        // res.send("pleae req donor.")
+        if(!data)
+        {
+            console.log("inside else")
+
+             res.send({
+                message : "Donor not available , please request for donor."
+            })
+        }
+    }).catch((error) => {
+        res.send({
+            error : error.message
+        })
+    })
+})
+
 // router.get('/',(req, res) =>
 // {
 //     res.send(receiver)
