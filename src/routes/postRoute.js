@@ -73,7 +73,60 @@ router.delete('/deletepost', (req, res) =>{
     })
 })
 
+router.put('/updatepost', (req, res) =>{
+    Post.updateOne(
+        {
+            _id:req.body.id
+        },
+        {
+            $set : {
+                ...req.body
+            }
+        }
+    ).then((data) =>{
+        Post.findOne({_id:req.body.id}).then((data) =>{
+            if(data)
+            {
+               res.send({
+                   message: "Post updated successfully."
+               }) 
+            }
+            else
+            {
+                res.send({
+                    message : "Post doesn't exists with id."
+                })
+            }
+        }).catch((error) =>{
+            res.send({
+                error : error.message
+            })
+        })
+    }).catch((errror) =>{
+        res.send({
+            errror : error.message
+        })
+    })
+})
 
+router.get('/searchpost',(req, res) =>{
+    Post.findOne({_id:req.body.id}).then((data) =>{
+        if(data)
+        {
+            res.send(data)
+        }
+        else
+        {
+            res.send({
+                message : "Post not available with id."
+            })
+        }
+    }).catch((error) =>{
+        res.send({
+            error : error.message
+        })
+    })
+})
 
 // router.get('/', (req, res) =>
 // {

@@ -69,6 +69,61 @@ router.delete('/deletestory',(req, res) =>{
     })
 })
 
+router.put('/updatestory',(req ,res) =>{
+    Story.updateOne(
+        {
+            _id:req.body.id
+        },
+        {
+            $set : {
+                ...req.body
+            }
+        }
+    ).then((data) =>{
+        Story.findOne({_id:req.body.id}).then((DATA) =>{
+            if(DATA!=null)
+            {
+                res.send({
+                    message : "Story updated successfully.",
+                    DATA
+                })
+            }
+            else
+            {
+                res.send({
+                    message : "Story not exist with given id."
+                })
+            }
+        }).catch((error) =>{
+            res.send({
+                error : error.message
+            })
+        })
+    }).catch((error) =>{
+        res.send({
+            error : error.message
+        })
+    })
+})
+
+router.get('/searchstory', (req, res) =>{
+    Story.findOne({_id:req.body.id}).then((data) =>{
+        if(data)
+        {
+            res.send(data)
+        }
+        else
+        {
+            res.send({
+                message : "Story doesnt exists with id."
+            })
+        }
+    }).catch((error) => {
+        res.send({
+            error : error.message
+        })
+    })
+})
 // router.get('/', (req, res) => 
 // {
 //     res.send(story)

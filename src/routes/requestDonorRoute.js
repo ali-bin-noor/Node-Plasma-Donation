@@ -82,6 +82,44 @@ router.delete('/deleterequest',(req, res) =>{
         })
     })
 })
+
+router.put('/updaterequest', (req, res) =>{
+    Request.updateOne(
+        {
+            _id:req.body.id
+        },
+        {
+            $set : {
+                ...req.body
+            }
+        }
+    ).then((data) =>{
+        Request.findOne({_id:req.body.id}).then((DATA) =>{
+            if(DATA!=null)
+            {
+                res.send({
+                    message : "Request updated successfully .",
+                    DATA
+                })
+            }
+            else
+            {
+                res.send({
+                    message : "Request doesn't exists with id"
+                })
+            }
+        }).catch((error) =>{
+            res.send({
+                error : ErrorEvent.message 
+            })
+        })
+    }).catch((error) =>{
+        res.send({
+            erroe : error.message
+        })
+    })
+}
+)
 // router.get('/',(req, res) =>
 // {
 //     res.send(requestDonorRoute)
