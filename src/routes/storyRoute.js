@@ -1,7 +1,7 @@
 const story = require('../staticData/story')
 const express = require('express')
 const router = express.Router()
-
+const isLoggedIn = require('../middleware')
 const Story = require('../models/Story')
 
 
@@ -17,7 +17,7 @@ router.get('/',(req, res) =>{
     
 })
 
-router.post('/createstory',(req, res) =>{
+router.post('/createstory', isLoggedIn , (req, res) =>{
     Story.findOne({email:req.body.email}).then((data) =>{
         if(data)
         {
@@ -51,7 +51,7 @@ router.post('/createstory',(req, res) =>{
     })
 })
 
-router.delete('/deletestory',(req, res) =>{
+router.delete('/deletestory', isLoggedIn ,(req, res) =>{
     Story.remove({_id:req.body.id}).then((data) =>{
         if(data.deletedCount===0)
         {
@@ -69,7 +69,7 @@ router.delete('/deletestory',(req, res) =>{
     })
 })
 
-router.put('/updatestory',(req ,res) =>{
+router.put('/updatestory', isLoggedIn ,(req ,res) =>{
     Story.updateOne(
         {
             _id:req.body.id
@@ -106,7 +106,7 @@ router.put('/updatestory',(req ,res) =>{
     })
 })
 
-router.get('/searchstory', (req, res) =>{
+router.get('/searchstory', isLoggedIn ,(req, res) =>{
     Story.findOne({_id:req.body.id}).then((data) =>{
         if(data)
         {

@@ -1,6 +1,7 @@
 const express = require ('express')
 const post = require ('../staticData/post')
 const Post = require('../models/Post')
+const isLoggedIn = require('../middleware')
 // const { map } = require ('../staticData/user')
 const router = express.Router()
 
@@ -15,7 +16,7 @@ router.get('/',(req, res) =>{
     })
 })
 
-router.post('/createpost',(req, res) =>{
+router.post('/createpost', isLoggedIn , (req, res) =>{
     Post.findOne({email:req.body.email}).then((data) =>{
         if(data)
         {
@@ -52,7 +53,7 @@ router.post('/createpost',(req, res) =>{
     })
 })
 
-router.delete('/deletepost', (req, res) =>{
+router.delete('/deletepost', isLoggedIn , (req, res) =>{
     
     Post.remove({_id:req.body.id}).then((data) =>{
     
@@ -73,7 +74,7 @@ router.delete('/deletepost', (req, res) =>{
     })
 })
 
-router.put('/updatepost', (req, res) =>{
+router.put('/updatepost', isLoggedIn , (req, res) =>{
     Post.updateOne(
         {
             _id:req.body.id
@@ -109,7 +110,7 @@ router.put('/updatepost', (req, res) =>{
     })
 })
 
-router.get('/searchpost',(req, res) =>{
+router.get('/searchpost', isLoggedIn , (req, res) =>{
     Post.findOne({_id:req.body.id}).then((data) =>{
         if(data)
         {

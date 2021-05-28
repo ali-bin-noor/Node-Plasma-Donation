@@ -1,5 +1,5 @@
 const express = require('express')
-
+const isLoggedIn = require('../middleware')
 const Donor = require('../models/Donor')
 // const { map } = require ('../staticData/user')
 const router = express.Router()
@@ -85,7 +85,7 @@ router.post('/createdonor', (req, res) =>
     })
 })
 
-router.delete('/deletedonor',(req, res) =>{
+router.delete('/deletedonor',isLoggedIn ,(req, res) =>{
     Donor.remove({_id:req.body.donorId}).then((data) =>{
         res.send({            
             message : "Donor account deleted successfully."
@@ -99,7 +99,7 @@ router.delete('/deletedonor',(req, res) =>{
 })
 
 
-router.put('/updatedonor',(req,res) =>{
+router.put('/updatedonor', isLoggedIn ,(req,res) =>{
     Donor.updateOne(
         {
             _id:req.body.id

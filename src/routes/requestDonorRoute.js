@@ -5,6 +5,7 @@ const router = express.Router()
 const post = require('../staticData/post')
 const Request = require('../models/Request')
 const Post =require('../models/Post')
+const isLoggedIn = require('../middleware')
 
 router.get('/',(req, res) =>{
     Request.find().then((data) =>{
@@ -16,7 +17,7 @@ router.get('/',(req, res) =>{
     })
 })
 
-router.post('/createrequest',(req, res) =>{
+router.post('/createrequest', isLoggedIn , (req, res) =>{
     Post.findOne({bloodGroup:req.body.bloodGroup}).then((data) => {
         if(data)
         {
@@ -62,7 +63,7 @@ router.post('/createrequest',(req, res) =>{
     })
 })
 
-router.delete('/deleterequest',(req, res) =>{
+router.delete('/deleterequest', isLoggedIn ,(req, res) =>{
     Request.remove({email:req.body.email}).then((data) =>{
         if(data.deletedCount===0)
         {
@@ -83,7 +84,7 @@ router.delete('/deleterequest',(req, res) =>{
     })
 })
 
-router.put('/updaterequest', (req, res) =>{
+router.put('/updaterequest',isLoggedIn , (req, res) =>{
     Request.updateOne(
         {
             _id:req.body.id

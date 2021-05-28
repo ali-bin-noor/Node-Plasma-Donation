@@ -1,6 +1,7 @@
 const receiver = require('../staticData/reciever')
 const express = require('express')
 const router = express.Router()
+const isLoggedIn = require('../middleware')
 const post = require('../staticData/post')
 const Receiver = require('../models/Receiver')
 const Donor = require('../models/Donor')
@@ -62,7 +63,7 @@ router.post('/createreceiver', (req, res) =>{
     })
 })
 
-router.delete('/deletereceiver',(req, res) =>{
+router.delete('/deletereceiver', isLoggedIn , (req, res) =>{
     Receiver.remove({_id:req.body.id}).then((data) =>{
         console.log(data)
         if(data.deletedCount===0)
@@ -85,7 +86,7 @@ router.delete('/deletereceiver',(req, res) =>{
     })
 })
 
-router.put('/updatereceiver',(req, res) =>{
+router.put('/updatereceiver', isLoggedIn , (req, res) =>{
     Receiver.updateOne(
         {
             _id:req.body.id
@@ -121,7 +122,7 @@ router.put('/updatereceiver',(req, res) =>{
 })
 
 
-router.get('/searchdonor',(req, res) =>{
+router.get('/searchdonor', isLoggedIn , (req, res) =>{
     Donor.find({bloodGroup:req.body.bloodGroup}).then((data) =>{
         if(data)
         {

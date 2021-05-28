@@ -11,6 +11,8 @@ const post = require('./src/routes/postRoute')
 const story = require('./src/routes/storyRoute')
 const receiver = require('./src/routes/receiverRoute')
 const requestDonor = require('./src/routes/requestDonorRoute')
+const auth = require('./src/routes/authRouts')
+
 
 const PORT=6000
 
@@ -34,6 +36,7 @@ app.use('/post', post)
 app.use('/story', story)
 app.use('/receiver', receiver)
 app.use('/requestdonor', requestDonor)
+app.use('/auth', auth)
 
 mongoose.connect(mongoURL, {
     useNewUrlParser: true,
