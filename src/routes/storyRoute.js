@@ -7,7 +7,7 @@ const Story = require('../models/Story')
 
 
 router.get('/',(req, res) =>{
-    Story.find().then((data) =>{
+    Story.find().populate('donorId',['name','email','bloodGroup','address','mobile']).then((data) =>{
         res.send(data)
     }).catch((error) =>{
         res.send({
@@ -18,7 +18,7 @@ router.get('/',(req, res) =>{
 })
 
 router.post('/createstory', isLoggedIn , (req, res) =>{
-    Story.findOne({email:req.body.email}).then((data) =>{
+    Story.findOne({donorId:req.body.id}).then((data) =>{
         if(data)
         {
             res.send({
@@ -28,9 +28,8 @@ router.post('/createstory', isLoggedIn , (req, res) =>{
         else
         {
             const story = new Story({
-                name: req.body.name,
-                email: req.body.email,
-                description : req.body.description
+                 description : req.body.description,
+                 donorId : req.body.id
 
             })
             story.save().then((data) =>{
@@ -52,7 +51,7 @@ router.post('/createstory', isLoggedIn , (req, res) =>{
 })
 
 router.delete('/deletestory', isLoggedIn ,(req, res) =>{
-    Story.remove({_id:req.body.id}).then((data) =>{
+    Story.remove({donorId:req.body.id}).then((data) =>{
         if(data.deletedCount===0)
         {
             res.send({

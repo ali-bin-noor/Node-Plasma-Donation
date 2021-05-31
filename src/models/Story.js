@@ -3,13 +3,9 @@ const { post } = require('../routes/donorRoute')
 const Schema = mongoose.Schema
 
 const storySchema = new Schema({
-    name : {
-        type : String ,
-        required : true 
-    },
-    email : {
-        type : String ,
-        required : true
+    donorId :{
+        type : Schema.Types.ObjectId, 
+        ref : "donor"
     },
     description : {
         type : String ,

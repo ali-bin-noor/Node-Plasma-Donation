@@ -8,7 +8,7 @@ const Post =require('../models/Post')
 const isLoggedIn = require('../middleware')
 
 router.get('/',(req, res) =>{
-    Request.find().then((data) =>{
+    Request.find().populate('receiverId',['name','email','bloodGroup','address','mobile']).then((data) =>{
         if(data){
             res.send(data)
         }  
@@ -31,17 +31,14 @@ router.post('/createrequest', isLoggedIn , (req, res) =>{
                 if(data)
                     {
                         res.send({
-                            message: "Request already exist with same mail."
+                            message: "Request already exist."
                         })
                     }
                 
                     else
                     {
                         const request = new Request({
-                        name:req.body.name,
-                        email:req.body.email,
-                        bloodGroup:req.body.bloodGroup,
-                        Mob:req.body.Mob
+                            receiverId : req.body.id
                         })
                     
                     request.save().then((data) =>{

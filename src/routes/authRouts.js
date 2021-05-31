@@ -5,13 +5,43 @@ const Receiver = require('../models/Receiver')
 const jwtsecret = require('../../config/').jwtsecret
 const jwt = require('jsonwebtoken')
 
-router.get('/login', (req, res) => {
+router.get('/logindonor', (req, res) => {
     Donor.findOne({email:req.body.email,password:req.body.password}).then((data) =>{
         if(data)
         {
+            console.log("hello")
             const accessToken = jwt.sign({
                 data : {
-                    email:data.email
+                    _id:data._id
+                }
+            }, jwtsecret)
+            res.send({
+                accessToken,
+                data
+            })
+        } 
+        else
+        {
+            res.send({
+                message : "Wrong email and password."
+            })
+        }  
+    }).catch((error) =>{
+        res.send({
+            error : error.message
+        })
+    })
+})
+
+
+router.get('/loginreceiver', (req, res) => {
+    Receiver.findOne({email:req.body.email,password:req.body.password}).then((data) =>{
+        if(data)
+        {
+            console.log("hello")
+            const accessToken = jwt.sign({
+                data : {
+                    _id:data._id
                 }
             }, jwtsecret)
             res.send({

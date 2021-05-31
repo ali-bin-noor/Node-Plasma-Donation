@@ -57,5 +57,5 @@ const receiverSchema = new Schema({
 })
 
 const receiver = mongoose.model('receiver', receiverSchema)
-module.exports=receiver
+module.exports = receiver
 
